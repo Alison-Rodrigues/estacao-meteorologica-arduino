@@ -4,6 +4,9 @@
 #include <Adafruit_BME280.h>
 
 #define SEALEVELPRESSURE_HPA (1013.25)
+#define pinSensorChuvaAna A1
+#define pinSensorChuvaDig 8
+
 
 int temperatura;
 int humidade;
@@ -19,6 +22,7 @@ Adafruit_BME280 bme; // I2C
 unsigned long delayTime;
 
 void setup() {
+    pinMode(pinSensorChuvaDig, INPUT);
     Serial.begin(9600);
     while(!Serial);    // time to get serial running
     Serial.println(F("BME280 test"));
@@ -77,7 +81,16 @@ void printValues() {
     Serial.print(leitura_porta);
     Serial.print(" - Indice: ");
     Serial.println(indiceUv);
+    Serial.print("Nível Radiação UV: ");
     Serial.println(textRadUv);
+
+    if (digitalRead(pinSensorChuvaDig)) {
+    Serial.println("Não está chovendo");
+    } else {
+      Serial.println("Está chovendo");
+    }
+    Serial.print("Valor analógico:");
+    Serial.println(analogRead(pinSensorChuvaAna));
 
     Serial.println();
 }

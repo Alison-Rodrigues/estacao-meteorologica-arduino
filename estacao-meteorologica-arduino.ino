@@ -12,8 +12,9 @@ int temperatura;
 int humidade;
 float pressao;
 int indiceUv;
-int leitura_porta;
+int leituraPorta;
 String textRadUv;
+String statusChuva;
 
 
 Adafruit_BME280 bme; // I2C
@@ -60,7 +61,7 @@ int getValoresBme() {
 }
 
 void printValues() {
-    int leitura_porta = analogRead(A0);
+    int leituraPorta = analogRead(A0);
     Serial.print("Temperatura = ");
     Serial.print(temperatura);
     Serial.println(" °C");
@@ -78,16 +79,18 @@ void printValues() {
     Serial.println(" %");
 
     Serial.print("Valor porta: ");
-    Serial.print(leitura_porta);
+    Serial.print(leituraPorta);
     Serial.print(" - Indice: ");
     Serial.println(indiceUv);
     Serial.print("Nível Radiação UV: ");
     Serial.println(textRadUv);
 
     if (digitalRead(pinSensorChuvaDig)) {
-    Serial.println("Não está chovendo");
+      statusChuva = "Não está chovendo";
+      Serial.println(statusChuva);
     } else {
-      Serial.println("Está chovendo");
+      statusChuva = "Está chovendo";
+      Serial.println(statusChuva);
     }
     Serial.print("Valor analógico:");
     Serial.println(analogRead(pinSensorChuvaAna));
@@ -96,39 +99,39 @@ void printValues() {
 }
 
 int getValoresRadUv() {
-  int leitura_porta = analogRead(A0);
+  int leituraPorta = analogRead(A0);
   //De acordo com a leitura define o indice UV corrrspondente
-  if (leitura_porta <= 10) {
+  if (leituraPorta <= 10) {
     indiceUv = 0;
     textRadUv = "Baixo";
-  } else if (leitura_porta > 10 && leitura_porta <= 46) {
+  } else if (leituraPorta > 10 && leituraPorta <= 46) {
     indiceUv = 1;
     textRadUv = "Baixo";
-  } else if (leitura_porta > 46 && leitura_porta <= 65) {
+  } else if (leituraPorta > 46 && leituraPorta <= 65) {
     indiceUv = 2;
     textRadUv = "Baixo";
-  } else if (leitura_porta > 65 && leitura_porta <= 83) {
+  } else if (leituraPorta > 65 && leituraPorta <= 83) {
     indiceUv = 3;
     textRadUv = "Moderado";
-  } else if (leitura_porta > 83 && leitura_porta <= 103) {
+  } else if (leituraPorta > 83 && leituraPorta <= 103) {
     indiceUv = 4;
     textRadUv = "Moderado";
-  } else if (leitura_porta > 103 && leitura_porta <= 124) {
+  } else if (leituraPorta > 103 && leituraPorta <= 124) {
     indiceUv = 5;
     textRadUv = "Moderado";
-  } else if (leitura_porta > 124 && leitura_porta <= 142) {
+  } else if (leituraPorta > 124 && leituraPorta <= 142) {
     indiceUv = 6;
     textRadUv = "Alto";
-  } else if (leitura_porta > 142 && leitura_porta <= 162) {
+  } else if (leituraPorta > 142 && leituraPorta <= 162) {
     indiceUv = 7;
     textRadUv = "Alto";
-  } else if (leitura_porta > 162 && leitura_porta <= 180) {
+  } else if (leituraPorta > 162 && leituraPorta <= 180) {
     indiceUv = 8;
     textRadUv = "Muito alto";
-  } else if (leitura_porta > 180 && leitura_porta <= 200) {
+  } else if (leituraPorta > 180 && leituraPorta <= 200) {
     indiceUv = 9;
     textRadUv = "Muito alto";
-  } else if (leitura_porta > 200 && leitura_porta <= 221) {
+  } else if (leituraPorta > 200 && leituraPorta <= 221) {
     indiceUv = 10;
     textRadUv = "Muito alto";
   } else {
